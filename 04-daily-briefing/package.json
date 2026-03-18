@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node src/briefing.mjs"
+    "start": "node --env-file=.env src/briefing.mjs"
   },
   "dependencies": {
     "@omnirun/sdk": "^0.3.3"
