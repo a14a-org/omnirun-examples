@@ -1,0 +1,12 @@
+{
+  "name": "omnirun-example-vault-injection",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --env-file=.env index.ts"
+  },
+  "dependencies": {
+    "@omnirun/sdk": "^0.3.3",
+    "tsx": "^4.7.0"
+  }
+}

@@ -20,6 +20,8 @@ omni auth init    # authenticate with magic link
 | 03 | [AI Code Review](./03-ai-code-review/) | Clone a repo, install deps, run tests — all in an isolated VM |
 | 04 | [Daily Briefing](./04-daily-briefing/) | Parallel data collection from 5 sources, each in its own sandbox |
 | 05 | [Code Execution API](./05-code-execution-api/) | Build an HTTP API that runs user code in sandboxes (like a mini Replit) |
+| 06 | [LLM Proxy](./06-llm-proxy/) | Access language models through OmniRun's LLM proxy with spend tracking |
+| 07 | [Vault Injection](./07-vault-injection/) | Store secrets in the vault and inject them into sandboxes as env vars |
 
 ## Why OmniRun?
 
