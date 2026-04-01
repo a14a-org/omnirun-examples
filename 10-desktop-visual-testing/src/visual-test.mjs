@@ -72,9 +72,9 @@ const LOGIN_PAGE = `<!DOCTYPE html>
 // Coordinates for form elements (approximate center positions for 1024x768)
 // These target the middle of each input/button in the login form layout.
 const COORDS = {
-  username: { x: 512, y: 350 },
-  password: { x: 512, y: 420 },
-  submit:   { x: 512, y: 475 },
+  username: { x: 512, y: 420 },
+  password: { x: 512, y: 500 },
+  submit:   { x: 512, y: 558 },
 };
 
 async function sleep(ms) {
@@ -94,7 +94,7 @@ async function saveScreenshot(pngData, name) {
 
 async function visualTest() {
   console.log("Creating desktop sandbox...");
-  const sandbox = await Sandbox.create("desktop", { timeout: 300 });
+  const sandbox = await Sandbox.create("desktop", { timeout: 300, internet: true });
   console.log(`Sandbox: ${sandbox.sandboxId}\n`);
 
   try {
@@ -113,16 +113,24 @@ async function visualTest() {
     );
     await sleep(2000);
 
-    // Step 3: Open Firefox
-    console.log("[3/8] Launching Firefox...");
+    // Step 3: Install and open Firefox
+    console.log("[3/8] Installing and launching Firefox...");
     await sandbox.commands.run(
-      "DISPLAY=:99 firefox-esr http://localhost:8000/app.html &",
+      "apt-get update -qq && apt-get install -y -qq bzip2 xz-utils libdbus-glib-1-2 libgtk-3-0 libasound2",
+      { timeout: 60 }
+    );
+    await sandbox.commands.run(
+      "curl -fsSL -L -o /tmp/firefox.tar.xz 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' && tar -xJf /tmp/firefox.tar.xz -C /opt/ && ln -sf /opt/firefox/firefox /usr/local/bin/firefox",
+      { timeout: 60 }
+    );
+    await sandbox.commands.run(
+      "DISPLAY=:99 firefox --no-remote http://localhost:8000/app.html &",
       { background: true }
     );
 
     // Wait for Firefox to render the page
     console.log("  Waiting for page to load...");
-    await sleep(6000);
+    await sleep(8000);
 
     // Step 4: Baseline screenshot
     console.log("[4/8] Taking baseline screenshot...");

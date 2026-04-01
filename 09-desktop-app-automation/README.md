@@ -1,13 +1,14 @@
-# Automate a Desktop Text Editor in a Cloud Sandbox
+# Automate a Desktop Application in a Cloud Sandbox
 
-Open a GUI text editor, type a program, save it, and run it -- all through automated keyboard and mouse control inside an OmniRun desktop sandbox.
+Open a terminal, type a program, run it, and interact with the file manager -- all through automated keyboard and mouse control inside an OmniRun desktop sandbox.
 
 ## What This Demonstrates
 
 - Creating a desktop sandbox with a full GUI environment (XFCE)
-- Launching a GUI application (`mousepad`) inside the sandbox
-- Typing text into the application with `sandbox.desktop.type()`
-- Using keyboard shortcuts with `sandbox.desktop.press()` (Ctrl+Shift+S, Alt+F4)
+- Launching a GUI application (`xfce4-terminal`) inside the sandbox
+- Typing commands and code using `sandbox.desktop.type()`
+- Using keyboard shortcuts with `sandbox.desktop.press()`
+- Mouse interactions with `sandbox.desktop.doubleClick()`
 - Capturing screenshots at each step with `sandbox.desktop.screenshot()`
 - Running the saved file to verify the automation worked
 - File persistence within the sandbox filesystem
@@ -36,12 +37,12 @@ Open a GUI text editor, type a program, save it, and run it -- all through autom
 ## How It Works
 
 1. A desktop sandbox is created with a 2-minute timeout.
-2. The `mousepad` text editor (XFCE's default) is launched on the virtual display.
-3. A fizzbuzz Python script is typed into the editor via keyboard automation.
-4. The file is saved using Ctrl+Shift+S (Save As), typing the path `/workspace/fizzbuzz.py`, and pressing Enter.
-5. The editor is closed with Alt+F4.
-6. The saved Python file is executed inside the sandbox using `sandbox.commands.run()`.
-7. Screenshots are captured at each stage and saved locally for inspection.
+2. The `xfce4-terminal` is launched maximized on the virtual display.
+3. A fizzbuzz Python script is written to a file using a heredoc in the terminal.
+4. The script is executed in the terminal via keyboard automation.
+5. The output is verified programmatically using `sandbox.commands.run()`.
+6. The file manager is opened via a double-click on the desktop icon.
+7. Screenshots are captured at each stage and saved to `./screenshots/`.
 
 ## Expected Output
 
@@ -49,28 +50,19 @@ Open a GUI text editor, type a program, save it, and run it -- all through autom
 Creating desktop sandbox...
 Sandbox: sbx_abc123
 
-=== Step 1: Launching mousepad editor ===
-  Mousepad launched.
+=== Step 1: Launching terminal ===
+  Screenshot saved: screenshots/01-terminal-open.png
 
-=== Step 2: Capturing empty editor ===
-  Screenshot saved: screenshot-01-empty-editor.png
+=== Step 2: Writing fizzbuzz.py via terminal ===
+  Code written to /workspace/fizzbuzz.py
 
-=== Step 3: Typing fizzbuzz program ===
-  Code typed into editor.
+=== Step 3: Capturing terminal with code ===
+  Screenshot saved: screenshots/02-code-written.png
 
-=== Step 4: Capturing editor with code ===
-  Screenshot saved: screenshot-02-after-typing.png
+=== Step 4: Running fizzbuzz.py ===
+  Screenshot saved: screenshots/03-output.png
 
-=== Step 5: Saving file via Save As ===
-  File saved as /workspace/fizzbuzz.py
-
-=== Step 6: Capturing editor after save ===
-  Screenshot saved: screenshot-03-after-save.png
-
-=== Step 7: Closing editor ===
-  Editor closed.
-
-=== Step 8: Running saved file ===
+=== Step 5: Verifying output via SDK ===
   Output from fizzbuzz.py:
   ---
   1
@@ -78,23 +70,15 @@ Sandbox: sbx_abc123
   Fizz
   4
   Buzz
-  Fizz
-  7
-  8
-  Fizz
-  Buzz
-  11
-  Fizz
-  13
-  14
+  ...
   FizzBuzz
-  16
-  17
-  Fizz
-  19
+  ...
   Buzz
   ---
 
+=== Step 6: Opening file manager via desktop click ===
+  Screenshot saved: screenshots/04-file-manager.png
+
 === Desktop automation complete ===
-All screenshots saved to the current directory.
+Screenshots saved to ./screenshots/
 ```

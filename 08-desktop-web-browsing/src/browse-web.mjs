@@ -47,22 +47,22 @@ async function browseWeb() {
       }
     }
 
-    // 2. Install Firefox ESR
-    console.log("Installing Firefox ESR (this may take a minute)...");
-    const installResult = await sandbox.commands.run(
-      "apt-get update -qq && apt-get install -y firefox-esr",
-      { timeout: 120 },
+    // 2. Install Firefox (download binary from Mozilla — Ubuntu 22.04 only has snap stubs)
+    console.log("Installing Firefox (this may take a minute)...");
+    await sandbox.commands.run(
+      "apt-get update -qq && apt-get install -y -qq bzip2 xz-utils libdbus-glib-1-2 libgtk-3-0 libasound2",
+      { timeout: 60 },
     );
-    if (installResult.exitCode !== 0) {
-      console.error("Failed to install Firefox:", installResult.stderr);
-      return;
-    }
-    console.log("Firefox ESR installed.");
+    await sandbox.commands.run(
+      "curl -fsSL -L -o /tmp/firefox.tar.xz 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' && tar -xJf /tmp/firefox.tar.xz -C /opt/ && ln -sf /opt/firefox/firefox /usr/local/bin/firefox",
+      { timeout: 60 },
+    );
+    console.log("Firefox installed.");
 
     // 3. Open Firefox to Hacker News
     console.log("Opening Firefox to https://news.ycombinator.com ...");
     await sandbox.commands.run(
-      "DISPLAY=:99 firefox-esr https://news.ycombinator.com &",
+      "DISPLAY=:99 firefox --no-remote https://news.ycombinator.com &",
       { background: true },
     );
 
