@@ -1,0 +1,11 @@
+{
+  "name": "omnirun-example-desktop-visual-testing",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env src/visual-test.mjs"
+  },
+  "dependencies": {
+    "@omnirun/sdk": "^0.6.0"
+  }
+}

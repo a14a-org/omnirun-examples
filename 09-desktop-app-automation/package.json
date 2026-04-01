@@ -1,0 +1,11 @@
+{
+  "name": "omnirun-example-desktop-app-automation",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env src/automate-editor.mjs"
+  },
+  "dependencies": {
+    "@omnirun/sdk": "^0.6.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "omnirun-example-desktop-web-browsing",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env src/browse-web.mjs"
+  },
+  "dependencies": {
+    "@omnirun/sdk": "^0.6.0"
+  }
+}

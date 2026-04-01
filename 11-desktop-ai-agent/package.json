@@ -1,0 +1,11 @@
+{
+  "name": "omnirun-example-desktop-ai-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env src/ai-agent.mjs"
+  },
+  "dependencies": {
+    "@omnirun/sdk": "^0.6.0"
+  }
+}
