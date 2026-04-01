@@ -2,6 +2,8 @@
 
 Open a terminal, type a program, run it, and interact with the file manager -- all through automated keyboard and mouse control inside an OmniRun desktop sandbox.
 
+![Desktop App Automation Demo](../docs/09-app-automation.gif)
+
 ## What This Demonstrates
 
 - Creating a desktop sandbox with a full GUI environment (XFCE)

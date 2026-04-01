@@ -2,6 +2,8 @@
 
 Launch a desktop sandbox, install Firefox, browse websites, and capture screenshots -- all programmatically.
 
+![Desktop Web Browsing Demo](../docs/08-web-browsing.gif)
+
 ## What This Demonstrates
 
 - Creating a desktop sandbox with internet access using the `"desktop"` template

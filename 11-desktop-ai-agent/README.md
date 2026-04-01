@@ -2,6 +2,8 @@
 
 An autonomous AI agent that controls a Linux desktop using screenshots and an LLM vision model. The agent perceives the screen, reasons about what action to take, executes it, and repeats — completing multi-step tasks without any hardcoded UI automation.
 
+![AI Agent Demo](../docs/11-ai-agent.gif)
+
 This is the "computer use" paradigm: instead of scripting exact clicks and keystrokes, you describe a goal in natural language, and the AI figures out how to accomplish it by looking at what's on screen.
 
 ## What This Demonstrates

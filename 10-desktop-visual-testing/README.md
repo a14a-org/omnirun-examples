@@ -2,6 +2,8 @@
 
 Demonstrates how to use OmniRun's desktop sandbox for visual regression testing of a web application. No browser automation framework (Playwright, Selenium, Puppeteer) is needed -- the sandbox provides a full desktop environment with a real browser, mouse, and keyboard.
 
+![Visual Testing Demo](../docs/10-visual-testing.gif)
+
 ## What This Demonstrates
 
 - Creating a desktop sandbox with a full GUI environment
