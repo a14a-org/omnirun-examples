@@ -34,10 +34,10 @@ The architecture is straightforward. The user sends a natural language prompt. Y
 Here is the complete code interpreter in 50 lines of TypeScript. It takes a user prompt, asks GPT-4 to generate Python code, runs it in an OmniRun sandbox, and returns the result.
 
 ```typescript
-import OmniRun from "@omnirun/sdk";
+import { Sandbox } from "@omnirun/sdk";
 import OpenAI from "openai";
 
-const omnirun = new OmniRun({ apiKey: process.env.OMNIRUN_API_KEY });
+// The SDK reads OMNIRUN_API_KEY from the environment.
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 async function interpret(userPrompt: string): Promise<string> {
@@ -59,19 +59,16 @@ async function interpret(userPrompt: string): Promise<string> {
   const code = completion.choices[0].message.content ?? "";
 
   // Step 2: Create a sandbox
-  const sandbox = await omnirun.sandboxes.create();
+  const sandbox = await Sandbox.create("python-3.11");
 
   try {
-    // Step 3: Write the code to a file in the sandbox
-    await sandbox.fs.writeFile("/tmp/script.py", code);
+    // Step 3: Run the generated code directly in the sandbox
+    const result = await sandbox.runCode(code, "python");
 
-    // Step 4: Execute the code
-    const result = await sandbox.commands.run("python3 /tmp/script.py");
-
-    // Step 5: Return the output
+    // Step 4: Return the output
     return result.stdout || result.stderr || "No output produced.";
   } finally {
-    // Step 6: Clean up
+    // Step 5: Clean up
     await sandbox.kill();
   }
 }
@@ -86,19 +83,17 @@ console.log(answer);
 
 ## Walking Through the Code
 
-The implementation breaks down into six clear steps.
+The implementation breaks down into five clear steps.
 
-**Step 1: Generate the code.** We send the user's natural language prompt to GPT-4 with a system message instructing it to output only executable Python. No markdown fences, no explanatory text -- just code that can be written to a file and run directly.
+**Step 1: Generate the code.** We send the user's natural language prompt to GPT-4 with a system message instructing it to output only executable Python. No markdown fences, no explanatory text -- just code that can be run directly.
 
-**Step 2: Create a sandbox.** A single API call spins up an isolated Firecracker microVM. This takes roughly 250ms thanks to snapshot restore. The sandbox has its own kernel, filesystem, and network stack. Nothing it does can affect your host or other sandboxes.
+**Step 2: Create a sandbox.** A single API call spins up an isolated Firecracker microVM. This is sub-second thanks to snapshot restore. The sandbox has its own kernel, filesystem, and network stack. Nothing it does can affect your host or other sandboxes.
 
-**Step 3: Write the code to the sandbox.** We use the filesystem API to write the generated script into the sandbox. You could also pipe it via stdin, but writing a file makes debugging easier -- you can inspect exactly what was generated.
+**Step 3: Execute the code.** The `runCode()` method runs the generated source inside the sandbox and waits for it to complete. The result includes stdout, stderr, and the exit code.
 
-**Step 4: Execute the code.** The `commands.run()` method executes a shell command inside the sandbox and waits for it to complete. The result includes stdout, stderr, and the exit code.
+**Step 4: Return the output.** We grab stdout (or stderr if something went wrong) and return it. In a production system, you might pass this output back to GPT-4 for natural language summarization.
 
-**Step 5: Return the output.** We grab stdout (or stderr if something went wrong) and return it. In a production system, you might pass this output back to GPT-4 for natural language summarization.
-
-**Step 6: Clean up.** The `finally` block ensures we kill the sandbox even if execution fails. You pay per second of sandbox time, so prompt cleanup matters. Sandboxes also auto-terminate after a configurable timeout as a safety net.
+**Step 5: Clean up.** The `finally` block ensures we kill the sandbox even if execution fails. You pay per second of sandbox time, so prompt cleanup matters. Sandboxes also auto-terminate after a configurable timeout as a safety net.
 
 ## Why Firecracker Matters Here
 
@@ -112,8 +107,8 @@ For an AI code interpreter that runs arbitrary user requests, this level of isol
 
 The 50-line version above is a starting point. A production code interpreter would add several capabilities: streaming output so users see results as they are produced, execution timeouts to prevent infinite loops, multi-turn conversations where the LLM can see previous outputs, support for multiple languages beyond Python, and file upload so users can provide data files for analysis.
 
-All of these are straightforward additions with the OmniRun SDK. The sandbox supports streaming command output, file uploads via the filesystem API, and you can install any language runtime by running package manager commands inside the sandbox. Check out the [examples repository](https://github.com/omnirun-io/omnirun-examples) for a fully-featured version with streaming, timeouts, and multi-language support.
+All of these are straightforward additions with the OmniRun SDK. The sandbox supports streaming command output, file uploads via the filesystem API, and you can install any language runtime by running package manager commands inside the sandbox. Check out the [examples repository](https://github.com/a14a-org/omnirun-examples) for a fully-featured version with streaming, timeouts, and multi-language support.
 
 ---
 
-Ready to build your own code interpreter? [Claim your $5 free credit](https://omnirun.io/claim) -- no credit card required. Start executing LLM-generated code safely in minutes.
+Ready to build your own code interpreter? [Get started free](https://omnirun.io/claim) -- 25 sandbox-hours per month, no credit card required. Start executing LLM-generated code safely in minutes.

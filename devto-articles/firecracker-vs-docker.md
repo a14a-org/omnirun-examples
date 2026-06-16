@@ -47,7 +47,7 @@ Firecracker's jailer wraps each VMM process in its own chroot, cgroup, and netwo
 
 The traditional knock against VMs is that they are slow to boot and wasteful with memory. Firecracker was designed to eliminate both.
 
-- **Boot time** -- Firecracker boots a microVM in under 125ms from a cold start. With snapshot restore (loading a pre-booted memory image), it drops to **under 250ms** including application state. That is comparable to container startup.
+- **Boot time** -- Firecracker boots a microVM in under 125ms from a cold start. With snapshot restore (loading a pre-booted memory image), startup stays **sub-second** including application state. That is comparable to container startup.
 - **Memory overhead** -- Each microVM adds roughly 5MB of overhead for the VMM process. Firecracker uses KVM's memory ballooning to reclaim unused guest memory, so a VM allocated 512MB but using 100MB only consumes about 105MB on the host.
 - **Density** -- Amazon runs thousands of Firecracker microVMs per physical host in production. The overhead per VM is low enough that density approaches container levels while maintaining full hardware isolation.
 
@@ -84,8 +84,8 @@ If your AI agent can execute arbitrary code -- and most useful agents can -- the
 
 ## How OmniRun Makes Firecracker Accessible
 
-Running Firecracker yourself is not simple. You need to manage kernel images, rootfs builds, snapshot pipelines, network configuration, jailer setup, and storage management. OmniRun wraps all of this behind a three-step API: `create` a sandbox, `run` commands, `kill` it when done. You get Firecracker-grade isolation through TypeScript, Python, or a CLI -- without managing any infrastructure. The sandbox boots in 250ms, runs your code in hardware isolation, and disappears cleanly when you are done.
+Running Firecracker yourself is not simple. You need to manage kernel images, rootfs builds, snapshot pipelines, network configuration, jailer setup, and storage management. OmniRun wraps all of this behind a three-step API: `create` a sandbox, `run` commands, `kill` it when done. You get Firecracker-grade isolation through a TypeScript SDK or a CLI (a Python SDK is coming soon) -- without managing any infrastructure. The sandbox boots sub-second, runs your code in hardware isolation, and disappears cleanly when you are done.
 
 ---
 
-Want to try OmniRun? [Claim your $5 free credit](https://omnirun.io/claim) -- no credit card required. Hardware-isolated sandboxes that boot in 250ms.
+Want to try OmniRun? [Get started free](https://omnirun.io/claim) -- 25 sandbox-hours per month, no credit card required. Hardware-isolated sandboxes that boot sub-second.

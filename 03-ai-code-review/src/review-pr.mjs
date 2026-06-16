@@ -11,7 +11,8 @@ import { Sandbox } from "@omnirun/sdk";
  */
 
 const repoUrl = process.argv[2] || "https://github.com/expressjs/express";
-const branch = process.argv[3] || "main";
+// expressjs/express's default branch is "master", not "main".
+const branch = process.argv[3] || "master";
 
 async function reviewInSandbox(repoUrl, branch) {
   console.log(`Reviewing ${repoUrl} (${branch})...`);

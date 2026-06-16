@@ -28,7 +28,7 @@ A sandboxed desktop environment solves this. The agent gets its own isolated des
 OmniRun provides desktop sandboxes with a full XFCE environment running inside a Firecracker microVM. The desktop API exposes four core operations that map directly to how a human interacts with a computer:
 
 - **screenshot()** -- Capture the current screen as a PNG image
-- **click(x, y)** -- Click at specific screen coordinates
+- **leftClick(x, y)** -- Click at specific screen coordinates
 - **type(text)** -- Type a string of text via keyboard input
 - **press(key)** -- Press a specific key (Enter, Tab, Escape, etc.)
 
@@ -39,15 +39,15 @@ These four operations are all you need. Every desktop interaction -- filling for
 Every desktop AI agent follows the same core architecture. Here is the loop in TypeScript:
 
 ```typescript
-import OmniRun from "@omnirun/sdk";
+import { Sandbox } from "@omnirun/sdk";
 import OpenAI from "openai";
 
-const omnirun = new OmniRun({ apiKey: process.env.OMNIRUN_API_KEY });
+// The SDK reads OMNIRUN_API_KEY from the environment.
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 async function desktopAgent(task: string) {
   // Create a desktop sandbox
-  const sandbox = await omnirun.sandboxes.create({ type: "desktop" });
+  const sandbox = await Sandbox.create("desktop");
 
   try {
     let done = false;
@@ -74,7 +74,12 @@ async function desktopAgent(task: string) {
             role: "user",
             content: [
               { type: "text", text: task },
-              { type: "image_url", image_url: { url: screenshot } },
+              {
+                type: "image_url",
+                image_url: {
+                  url: `data:image/png;base64,${Buffer.from(screenshot).toString("base64")}`,
+                },
+              },
             ],
           },
         ],
@@ -87,7 +92,7 @@ async function desktopAgent(task: string) {
       // 3. Act: execute the action
       switch (action.type) {
         case "click":
-          await sandbox.desktop.click(action.x, action.y);
+          await sandbox.desktop.leftClick(action.x, action.y);
           break;
         case "type":
           await sandbox.desktop.type(action.text);
@@ -137,8 +142,8 @@ OmniRun desktop sandboxes run on Firecracker microVMs, which means each desktop 
 
 ## Getting Started
 
-The [OmniRun examples repository](https://github.com/omnirun-io/omnirun-examples) includes a complete desktop AI agent that demonstrates the full perception-action loop with error recovery, action history, and multi-step task completion. Start with the documentation, get your API key, and have a desktop agent running in minutes.
+The [OmniRun examples repository](https://github.com/a14a-org/omnirun-examples) includes a complete desktop AI agent that demonstrates the full perception-action loop with error recovery, action history, and multi-step task completion. Start with the documentation, get your API key, and have a desktop agent running in minutes.
 
 ---
 
-Ready to build desktop AI agents? [Claim your $5 free credit](https://omnirun.io/claim) -- no credit card required. Spin up an isolated desktop environment and start building computer use agents.
+Ready to build desktop AI agents? [Get started free](https://omnirun.io/claim) -- 25 sandbox-hours per month, no credit card required. Spin up an isolated desktop environment and start building computer use agents.

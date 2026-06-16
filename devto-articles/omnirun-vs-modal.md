@@ -15,7 +15,7 @@ OmniRun and Modal both run code in the cloud, but they are built for different p
 
 Modal is a **broad compute platform**. It handles ML inference, model training, batch processing, GPU workloads, cron jobs, and web endpoints. It is designed to replace your infrastructure layer entirely -- you write Python functions, decorate them, and Modal handles the rest.
 
-OmniRun is **laser-focused on sandboxed code execution**. It does one thing: give your AI agent (or your users) an isolated environment to run arbitrary code safely. No GPU scheduling, no training pipelines, no batch orchestration. Just sandboxes that boot in 250ms and are fully isolated at the hardware level.
+OmniRun is **laser-focused on sandboxed code execution**. It does one thing: give your AI agent (or your users) an isolated environment to run arbitrary code safely. No GPU scheduling, no training pipelines, no batch orchestration. Just sandboxes that boot sub-second and are fully isolated at the hardware level.
 
 ## Use Case Fit
 
@@ -44,7 +44,7 @@ Modal uses **container-based isolation** with gVisor for additional sandboxing. 
 
 The API philosophies are fundamentally different.
 
-**OmniRun** has a minimal, imperative API: `create` a sandbox, `run` commands, `kill` it when done. You have full control over the sandbox lifecycle. The TypeScript SDK, Python SDK, and CLI all follow this pattern. There is no magic -- you manage the sandbox explicitly.
+**OmniRun** has a minimal, imperative API: `create` a sandbox, `run` commands, `kill` it when done. You have full control over the sandbox lifecycle. The TypeScript SDK and CLI follow this pattern (a Python SDK is coming soon). There is no magic -- you manage the sandbox explicitly.
 
 **Modal** uses a decorator-based approach. You annotate Python functions with `@app.function()` and Modal handles provisioning, scaling, and teardown. This is powerful for serverless workloads but means you work within Modal's execution model. You define functions, not sandboxes. Modal also has a Sandbox API for running arbitrary code, but it is a secondary feature rather than the platform's core focus.
 
@@ -52,7 +52,7 @@ The API philosophies are fundamentally different.
 
 Modal is Python-first. Its SDK, decorator model, and documentation all center on Python. You can run other languages inside Modal containers, but the orchestration layer is Python.
 
-OmniRun is language-agnostic at the SDK level. The TypeScript and Python SDKs are first-class citizens, and the CLI works from any environment. Inside the sandbox, you can run anything -- Python, Node, Go, Rust, shell scripts -- because it is a full Linux VM, not a function execution environment.
+OmniRun is language-agnostic at the SDK level. The TypeScript SDK is a first-class citizen (a Python SDK is coming soon), and the CLI works from any environment. Inside the sandbox, you can run anything -- Python, Node, Go, Rust, shell scripts -- because it is a full Linux VM, not a function execution environment.
 
 ## Pricing Model
 
@@ -70,4 +70,4 @@ If you need to **run untrusted code safely, sandbox AI agents, or provide isolat
 
 ---
 
-Want to try OmniRun? [Claim your $5 free credit](https://omnirun.io/claim) -- no credit card required. Spin up your first Firecracker sandbox in under a minute.
+Want to try OmniRun? [Get started free](https://omnirun.io/claim) -- 25 sandbox-hours per month, no credit card required. Spin up your first Firecracker sandbox in under a minute.

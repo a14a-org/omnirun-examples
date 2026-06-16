@@ -12,7 +12,7 @@ https://github.com/arjan/awesome-agent-sandboxes
 ## Entry to add
 
 ```markdown
-- [OmniRun](https://omnirun.io) - Firecracker microVM sandboxes with 250ms boot, desktop GUI control, end-to-end encryption, and TypeScript/Python SDKs.
+- [OmniRun](https://omnirun.io) - Firecracker microVM sandboxes with sub-second boot, desktop GUI control, end-to-end encryption, and a TypeScript SDK (Python SDK coming soon).
 ```
 
 ## PR Title
@@ -24,9 +24,9 @@ Adds [OmniRun](https://omnirun.io) to the Cloud section.
 
 OmniRun provides Firecracker microVM sandboxes built for AI agents with:
 
-- 250ms cold boot
+- Sub-second cold boot
 - Desktop GUI control (mouse/keyboard/screenshot)
 - End-to-end encryption
-- TypeScript SDK ([npm](https://www.npmjs.com/package/@omnirun/sdk)) and Python SDK ([PyPI](https://pypi.org/project/omnirun/))
+- TypeScript SDK ([npm](https://www.npmjs.com/package/@omnirun/sdk)); Python SDK coming soon
 - CLI for sandbox management and command execution
 - Web preview URLs for exposing services running inside sandboxes

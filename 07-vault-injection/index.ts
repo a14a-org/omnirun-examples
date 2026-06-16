@@ -95,7 +95,7 @@ async function listCredentialKeys(): Promise<void> {
 // ---------------------------------------------------------------------------
 async function runWithVaultInjection(): Promise<void> {
   console.log("=== Creating Sandbox with Vault Injection ===");
-  const sandbox = await Sandbox.create("node-22", {
+  const sandbox = await Sandbox.create("node-20", {
     timeout: 60,
     internet: false,
     metadata: { source: "vault-injection-example", vaultInject: "true" },

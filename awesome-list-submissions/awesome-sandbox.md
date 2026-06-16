@@ -22,7 +22,7 @@ Add as a new subsection in Section 4 (after the existing platforms):
 ```markdown
 ### **4.x. OmniRun: Firecracker MicroVMs for AI Agents**
 
-* **Overview:** OmniRun is a cloud sandbox platform designed for AI agents and automation workflows. It runs isolated Firecracker microVMs with 250ms boot times and provides desktop GUI control (mouse, keyboard, and screenshot capture) alongside standard command execution. All sandbox communication supports end-to-end encryption.
+* **Overview:** OmniRun is a cloud sandbox platform designed for AI agents and automation workflows. It runs isolated Firecracker microVMs with sub-second boot times and provides desktop GUI control (mouse, keyboard, and screenshot capture) alongside standard command execution. All sandbox communication supports end-to-end encryption.
 * **Website:** [omnirun.io](https://omnirun.io)
 * **Launch Date:** 2025
 * **License:** Proprietary (SDKs are open source)
@@ -34,7 +34,7 @@ Add as a new subsection in Section 4 (after the existing platforms):
   * **Network Access:** Full internet access. Services running inside sandboxes can be exposed via temporary preview URLs.
   * **Desktop GUI:** Built-in desktop environment with programmatic mouse, keyboard, and screenshot APIs for browser automation and visual testing.
   * **Workload Suitability:** Suited for both short-lived code execution tasks and long-running agent sessions requiring desktop interaction.
-* **SDKs:** [TypeScript SDK](https://www.npmjs.com/package/@omnirun/sdk), [Python SDK](https://pypi.org/project/omnirun/)
+* **SDKs:** [TypeScript SDK](https://www.npmjs.com/package/@omnirun/sdk) (Python SDK coming soon)
 * **Underlying Technology:** Firecracker microVMs with end-to-end encryption for sandbox communication.
 ```
 
@@ -47,10 +47,10 @@ Adds OmniRun to the feature matrix and platform profiles section.
 
 OmniRun is a cloud sandbox platform for AI agents built on Firecracker microVMs with:
 
-- 250ms cold boot
+- Sub-second cold boot
 - Desktop GUI control (mouse, keyboard, screenshot)
 - End-to-end encryption
-- TypeScript and Python SDKs
+- TypeScript SDK (Python SDK coming soon)
 - Temporary preview URLs for exposing sandbox services
 
 Added to:

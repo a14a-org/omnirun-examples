@@ -34,7 +34,7 @@ Demonstrates an automated code review workflow that clones a repository, install
    Or review a specific repo and branch:
 
    ```bash
-   node src/review-pr.mjs https://github.com/expressjs/express main
+   node src/review-pr.mjs https://github.com/expressjs/express
    ```
 
 ## How It Works
