@@ -70,4 +70,4 @@ If you need to **run untrusted code safely, sandbox AI agents, or provide isolat
 
 ---
 
-Want to try OmniRun? [Claim your $5 free credit](https://omnirun.io/claim) -- no credit card required. Spin up your first Firecracker sandbox in under a minute.
+Want to try OmniRun? [Get started free](https://omnirun.io/claim) -- 25 sandbox-hours per month, no credit card required. Spin up your first Firecracker sandbox in under a minute.

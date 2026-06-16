@@ -88,4 +88,4 @@ Running Firecracker yourself is not simple. You need to manage kernel images, ro
 
 ---
 
-Want to try OmniRun? [Claim your $5 free credit](https://omnirun.io/claim) -- no credit card required. Hardware-isolated sandboxes that boot in 250ms.
+Want to try OmniRun? [Get started free](https://omnirun.io/claim) -- 25 sandbox-hours per month, no credit card required. Hardware-isolated sandboxes that boot in 250ms.
