@@ -74,7 +74,12 @@ async function desktopAgent(task: string) {
             role: "user",
             content: [
               { type: "text", text: task },
-              { type: "image_url", image_url: { url: screenshot } },
+              {
+                type: "image_url",
+                image_url: {
+                  url: `data:image/png;base64,${Buffer.from(screenshot).toString("base64")}`,
+                },
+              },
             ],
           },
         ],
