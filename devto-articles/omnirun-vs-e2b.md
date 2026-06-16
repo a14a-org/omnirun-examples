@@ -13,7 +13,7 @@ Both OmniRun and E2B let you spin up sandboxed environments for AI agents to exe
 
 ## What They Have in Common
 
-Both OmniRun and E2B solve the same core problem: giving AI agents a safe place to execute code. You create a sandbox, run commands inside it, and tear it down when you are done. Both platforms offer TypeScript and Python SDKs, per-second billing, and sub-second startup times.
+Both OmniRun and E2B solve the same core problem: giving AI agents a safe place to execute code. You create a sandbox, run commands inside it, and tear it down when you are done. Both platforms offer SDKs (OmniRun ships a TypeScript SDK today, with a Python SDK coming soon; E2B offers both), per-second billing, and sub-second startup times.
 
 Both support filesystem operations, process execution, and internet access from within sandboxes. If your agent needs to install packages, write files, or run scripts, either platform will work. The differences are in how they isolate workloads, handle security, and what extras they offer.
 
@@ -30,7 +30,7 @@ This is good news: whichever platform you pick, you get VM-level isolation suita
 
 ## Boot Time
 
-OmniRun boots sandboxes in roughly **250ms** using Firecracker snapshot restore. E2B reports sandbox startup around **500ms**. Both are fast enough for interactive use cases. OmniRun's snapshot approach means you get VM-level isolation without the startup penalty traditionally associated with virtual machines.
+OmniRun boots sandboxes **sub-second** using Firecracker snapshot restore. E2B reports sandbox startup around **500ms**. Both are fast enough for interactive use cases. OmniRun's snapshot approach means you get VM-level isolation without the startup penalty traditionally associated with virtual machines.
 
 ## Desktop Sandboxes
 
@@ -44,7 +44,7 @@ E2B does not currently offer end-to-end encryption. Data in transit is protected
 
 ## SDKs and Developer Experience
 
-Both platforms offer TypeScript and Python SDKs with similar APIs: create a sandbox, execute commands, manage files, tear down. The core workflow is nearly identical.
+Both platforms offer SDKs with similar APIs: create a sandbox, execute commands, manage files, tear down. OmniRun ships a TypeScript SDK today (a Python SDK is coming soon), while E2B offers both TypeScript and Python. The core workflow is nearly identical.
 
 OmniRun also ships a **CLI tool** for managing sandboxes from the terminal. This is useful for debugging, scripting, and CI/CD pipelines where you want sandbox access without writing SDK code. E2B focuses on the SDK experience and does not offer a standalone CLI.
 
@@ -59,7 +59,7 @@ OmniRun offers a free tier of **25 sandbox-hours per month** to get started with
 - **E2EE requirements** -- Healthcare, finance, or any domain where the sandbox provider should never see your data
 - **Desktop automation** -- GUI-based agent workflows with full XFCE desktop access
 - **CLI-first workflows** -- Teams that want to manage sandboxes from the terminal or CI/CD
-- **Faster cold starts** -- Snapshot restore gets sandboxes running in roughly half the time
+- **Faster cold starts** -- Snapshot restore gets sandboxes running sub-second
 
 ## When to Choose E2B
 
