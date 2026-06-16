@@ -12,7 +12,6 @@
 <p align="center">
   <a href="https://omnirun.io/docs"><img src="https://img.shields.io/badge/docs-omnirun.io-blue" alt="Documentation"></a>
   <a href="https://www.npmjs.com/package/@omnirun/sdk"><img src="https://img.shields.io/npm/v/@omnirun/sdk?label=SDK" alt="npm"></a>
-  <a href="https://pypi.org/project/omnirun/"><img src="https://img.shields.io/pypi/v/omnirun?label=Python%20SDK" alt="PyPI"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
 </p>
 
@@ -87,7 +86,7 @@ OmniRun gives each execution its own [Firecracker](https://firecracker-microvm.g
 | Package | Install |
 |---------|---------|
 | [TypeScript SDK](https://github.com/a14a-org/omnirun-sdk) | `npm install @omnirun/sdk` |
-| [Python SDK](https://github.com/a14a-org/omnirun-sdk-python) | `pip install omnirun` |
+| Python SDK | _Not yet published_ |
 | [CLI](https://www.npmjs.com/package/@omnirun/cli) | `npm install -g @omnirun/cli` |
 
 ## Prerequisites
@@ -109,7 +108,6 @@ Contributions are welcome! To add an example:
 ## Learn More
 
 - [OmniRun Docs](https://omnirun.io/docs)
-- [OmniRun Tutorials](https://omnirun.io/tutorials)
 - [SDK Reference](https://www.npmjs.com/package/@omnirun/sdk)
 - [CLI Reference](https://www.npmjs.com/package/@omnirun/cli)
 
