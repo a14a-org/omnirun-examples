@@ -87,7 +87,7 @@ The implementation breaks down into five clear steps.
 
 **Step 1: Generate the code.** We send the user's natural language prompt to GPT-4 with a system message instructing it to output only executable Python. No markdown fences, no explanatory text -- just code that can be run directly.
 
-**Step 2: Create a sandbox.** A single API call spins up an isolated Firecracker microVM. This takes roughly 250ms thanks to snapshot restore. The sandbox has its own kernel, filesystem, and network stack. Nothing it does can affect your host or other sandboxes.
+**Step 2: Create a sandbox.** A single API call spins up an isolated Firecracker microVM. This is sub-second thanks to snapshot restore. The sandbox has its own kernel, filesystem, and network stack. Nothing it does can affect your host or other sandboxes.
 
 **Step 3: Execute the code.** The `runCode()` method runs the generated source inside the sandbox and waits for it to complete. The result includes stdout, stderr, and the exit code.
 
