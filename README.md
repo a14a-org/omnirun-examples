@@ -12,7 +12,7 @@
 <p align="center">
   <a href="https://omnirun.io/docs"><img src="https://img.shields.io/badge/docs-omnirun.io-blue" alt="Documentation"></a>
   <a href="https://www.npmjs.com/package/@omnirun/sdk"><img src="https://img.shields.io/npm/v/@omnirun/sdk?label=SDK" alt="npm"></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="License"></a>
 </p>
 
 ---
@@ -95,6 +95,13 @@ OmniRun gives each execution its own [Firecracker](https://firecracker-microvm.g
 - An OmniRun API key ([get one free](https://omnirun.io/docs))
 - `@omnirun/sdk` (installed per-example via npm)
 
+## Self-hosting
+
+The OmniRun server is open source (Apache-2.0) at [github.com/a14a-org/omnirun](https://github.com/a14a-org/omnirun). Every example
+reads `OMNIRUN_API_URL` from its `.env` (default `https://api.omnirun.io`); set
+it to your own deployment's URL, with an API key issued by that deployment in
+`OMNIRUN_API_KEY`, to run the examples against a self-hosted OmniRun.
+
 ## Contributing
 
 Contributions are welcome! To add an example:
@@ -103,7 +110,8 @@ Contributions are welcome! To add an example:
 2. Include a `README.md` explaining what it demonstrates
 3. Add a `.env.example` with required environment variables
 4. Keep it self-contained — `npm install && npm start` should work
-5. Open a PR
+5. Open a PR, with every commit signed off (`git commit -s`); see
+   [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Learn More
 
@@ -113,4 +121,7 @@ Contributions are welcome! To add an example:
 
 ## License
 
-MIT
+[Apache License 2.0](./LICENSE). See [NOTICE](./NOTICE). Contributions require a DCO
+sign-off; see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+Revisions before the relicense were published under the MIT license.
